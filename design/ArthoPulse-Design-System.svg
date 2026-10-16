@@ -1,0 +1,216 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1440" viewBox="0 0 1920 1440" fill="none">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#D610E6"/>
+      <stop offset="1" stop-color="#9100EF"/>
+    </linearGradient>
+    <linearGradient id="brand-soft" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#F927D7"/>
+      <stop offset="1" stop-color="#A300DF"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#0467A8"/>
+      <stop offset="1" stop-color="#00BDF2"/>
+    </linearGradient>
+    <linearGradient id="assistant" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#244989"/>
+      <stop offset=".5" stop-color="#541D9A"/>
+      <stop offset="1" stop-color="#9B18B8"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFFFF" stop-opacity=".075"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity=".018"/>
+    </linearGradient>
+    <style>
+      text { font-family: Inter, "Segoe UI", Arial, sans-serif; }
+      .label { fill: #9B97A7; font-size: 13px; font-weight: 600; letter-spacing: 1.3px; }
+      .title { fill: #F8F7FB; font-size: 36px; font-weight: 700; letter-spacing: -1.2px; }
+      .body { fill: #D5D2DE; font-size: 16px; font-weight: 400; }
+      .small { fill: #AAA6B5; font-size: 13px; font-weight: 500; }
+      .card { fill: url(#glass); stroke: #FFFFFF; stroke-opacity: .09; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1440" fill="#0B0A10"/>
+  <circle cx="120" cy="20" r="520" fill="#8D14B8" fill-opacity=".08"/>
+  <circle cx="1850" cy="770" r="500" fill="#282F85" fill-opacity=".07"/>
+
+  <g id="page-header">
+    <rect x="64" y="52" width="48" height="48" rx="15" fill="url(#brand)"/>
+    <path d="M72 78h9l4.2-10 6.3 19 5.1-12.5 2.5 3.5h8" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M88 58a20 20 0 1 1-14.14 5.86" stroke="#fff" stroke-opacity=".48" stroke-width="1.8" stroke-linecap="round"/>
+    <text x="128" y="78" fill="#F8F7FB" font-size="22" font-weight="700">ArthoPulse</text>
+    <text x="128" y="101" fill="#AAA6B5" font-size="12" font-weight="500" letter-spacing=".4">SMART FINANCE, SMARTER FUTURE.</text>
+    <rect x="1560" y="60" width="296" height="38" rx="19" fill="#FFFFFF" fill-opacity=".055" stroke="#FFFFFF" stroke-opacity=".09"/>
+    <circle cx="1582" cy="79" r="4" fill="#00D895"/>
+    <text x="1596" y="84" fill="#D5D2DE" font-size="13" font-weight="600">FOUNDATIONS + COMPONENTS</text>
+    <text x="64" y="174" class="title">Design system</text>
+    <text x="64" y="207" class="body">A calm, confident pulse for everyday money decisions.</text>
+    <text x="64" y="235" class="small">Artho (অর্থ) — wealth, value  ·  Pulse (স্পন্দন) — rhythm, a living signal</text>
+    <text x="1856" y="177" text-anchor="end" fill="#777481" font-size="13" font-weight="600">DESIGN LANGUAGE  /  01</text>
+    <path d="M64 260H1856" stroke="#FFFFFF" stroke-opacity=".1"/>
+  </g>
+
+  <g id="color-system">
+    <text x="64" y="302" class="label">01  /  COLOR</text>
+    <text x="64" y="330" fill="#F8F7FB" font-size="20" font-weight="650">Purposeful contrast, expressive accents</text>
+
+    <g id="brand-colors">
+      <rect x="64" y="352" width="278" height="106" rx="18" fill="#17121E" stroke="#FFFFFF" stroke-opacity=".09"/>
+      <rect x="78" y="366" width="48" height="48" rx="14" fill="url(#brand)"/>
+      <text x="140" y="384" fill="#F8F7FB" font-size="14" font-weight="650">Pulse gradient</text>
+      <text x="140" y="406" class="small">Brand / primary</text>
+      <text x="80" y="440" fill="#C8C4D1" font-size="12" font-weight="550">#D610E6</text>
+      <text x="321" y="440" text-anchor="end" fill="#C8C4D1" font-size="12" font-weight="550">#9100EF</text>
+
+      <rect x="358" y="352" width="278" height="106" rx="18" fill="#17121E" stroke="#FFFFFF" stroke-opacity=".09"/>
+      <rect x="372" y="366" width="48" height="48" rx="14" fill="#F20BE9"/>
+      <text x="434" y="384" fill="#F8F7FB" font-size="14" font-weight="650">Signal magenta</text>
+      <text x="434" y="406" class="small">Chart / highlight</text>
+      <text x="374" y="440" fill="#C8C4D1" font-size="12" font-weight="550">#F20BE9</text>
+
+      <rect x="652" y="352" width="278" height="106" rx="18" fill="#17121E" stroke="#FFFFFF" stroke-opacity=".09"/>
+      <rect x="666" y="366" width="48" height="48" rx="14" fill="#00C8EF"/>
+      <text x="728" y="384" fill="#F8F7FB" font-size="14" font-weight="650">Savings cyan</text>
+      <text x="728" y="406" class="small">Savings / secondary data</text>
+      <text x="668" y="440" fill="#C8C4D1" font-size="12" font-weight="550">#00C8EF</text>
+
+      <rect x="946" y="352" width="278" height="106" rx="18" fill="#17121E" stroke="#FFFFFF" stroke-opacity=".09"/>
+      <rect x="960" y="366" width="48" height="48" rx="14" fill="#00D895"/>
+      <text x="1022" y="384" fill="#F8F7FB" font-size="14" font-weight="650">Money in</text>
+      <text x="1022" y="406" class="small">Positive / success</text>
+      <text x="962" y="440" fill="#C8C4D1" font-size="12" font-weight="550">#00D895</text>
+
+      <rect x="1240" y="352" width="278" height="106" rx="18" fill="#17121E" stroke="#FFFFFF" stroke-opacity=".09"/>
+      <rect x="1254" y="366" width="48" height="48" rx="14" fill="#FF5368"/>
+      <text x="1316" y="384" fill="#F8F7FB" font-size="14" font-weight="650">Money out</text>
+      <text x="1316" y="406" class="small">Negative / attention</text>
+      <text x="1256" y="440" fill="#C8C4D1" font-size="12" font-weight="550">#FF5368</text>
+
+      <rect x="1534" y="352" width="322" height="106" rx="18" fill="#17121E" stroke="#FFFFFF" stroke-opacity=".09"/>
+      <rect x="1548" y="366" width="48" height="48" rx="14" fill="#898694"/>
+      <text x="1610" y="384" fill="#F8F7FB" font-size="14" font-weight="650">Muted text</text>
+      <text x="1610" y="406" class="small">Secondary / supporting</text>
+      <text x="1550" y="440" fill="#C8C4D1" font-size="12" font-weight="550">#898694</text>
+    </g>
+
+    <g id="neutral-colors">
+      <text x="64" y="500" fill="#C8C4D1" font-size="13" font-weight="650">NEUTRALS</text>
+      <rect x="64" y="516" width="278" height="76" rx="14" fill="#0B0A10" stroke="#FFFFFF" stroke-opacity=".12"/>
+      <text x="80" y="551" fill="#F8F7FB" font-size="13" font-weight="650">Canvas</text>
+      <text x="80" y="574" fill="#AAA6B5" font-size="12">#0B0A10</text>
+      <rect x="358" y="516" width="278" height="76" rx="14" fill="#121019" stroke="#FFFFFF" stroke-opacity=".12"/>
+      <text x="374" y="551" fill="#F8F7FB" font-size="13" font-weight="650">Raised surface</text>
+      <text x="374" y="574" fill="#AAA6B5" font-size="12">#121019</text>
+      <rect x="652" y="516" width="278" height="76" rx="14" fill="#191720" stroke="#FFFFFF" stroke-opacity=".12"/>
+      <text x="668" y="551" fill="#F8F7FB" font-size="13" font-weight="650">Glass surface</text>
+      <text x="668" y="574" fill="#AAA6B5" font-size="12">#191720 / translucent</text>
+      <rect x="946" y="516" width="278" height="76" rx="14" fill="#F8F7FB" stroke="#FFFFFF" stroke-opacity=".12"/>
+      <text x="962" y="551" fill="#17151D" font-size="13" font-weight="650">Primary text</text>
+      <text x="962" y="574" fill="#514E59" font-size="12">#F8F7FB</text>
+      <rect x="1240" y="516" width="616" height="76" rx="14" fill="#FFFFFF" fill-opacity=".04" stroke="#FFFFFF" stroke-opacity=".12"/>
+      <text x="1260" y="551" fill="#F8F7FB" font-size="13" font-weight="650">Glass borders</text>
+      <text x="1260" y="574" fill="#AAA6B5" font-size="12">White at 5–9% opacity · subtle separation without visual noise</text>
+    </g>
+  </g>
+
+  <g id="typography">
+    <rect x="64" y="624" width="856" height="312" rx="24" class="card"/>
+    <text x="92" y="666" class="label">02  /  TYPOGRAPHY</text>
+    <text x="892" y="666" text-anchor="end" class="small">Inter  ·  400 / 500 / 600 / 700 / 800</text>
+    <text x="92" y="730" fill="#F8F7FB" font-size="38" font-weight="700" letter-spacing="-1.4">Money, made clearer.</text>
+    <text x="92" y="759" fill="#AAA6B5" font-size="12" font-weight="500">DISPLAY / 38 · 700 · -1.4</text>
+    <text x="92" y="817" fill="#F8F7FB" font-size="26" font-weight="700" letter-spacing="-.7">Monthly savings</text>
+    <text x="92" y="843" fill="#AAA6B5" font-size="12" font-weight="500">HEADING / 26 · 700</text>
+    <text x="500" y="817" fill="#F8F7FB" font-size="18" font-weight="600">Financial snapshot</text>
+    <text x="500" y="843" fill="#AAA6B5" font-size="12" font-weight="500">TITLE / 18 · 600</text>
+    <text x="92" y="890" fill="#D5D2DE" font-size="15" font-weight="400">Everyday account activity, at a glance.</text>
+    <text x="92" y="914" fill="#AAA6B5" font-size="12" font-weight="500">BODY / 15 · 400</text>
+    <text x="500" y="890" fill="#898694" font-size="12" font-weight="500">TODAY, 10:42 AM  ·  SUPPORTING LABEL</text>
+    <text x="500" y="914" fill="#AAA6B5" font-size="12" font-weight="500">CAPTION / 12 · 500 · +0.3 TRACKING</text>
+  </g>
+
+  <g id="spacing-and-shape">
+    <rect x="944" y="624" width="912" height="312" rx="24" class="card"/>
+    <text x="972" y="666" class="label">03  /  SPACING + SHAPE</text>
+    <text x="972" y="705" fill="#C8C4D1" font-size="14" font-weight="600">8-point rhythm</text>
+    <g transform="translate(972 729)">
+      <rect width="8" height="8" rx="2" fill="#D610E6"/><text x="0" y="32" class="small">4</text>
+      <rect x="54" width="16" height="16" rx="4" fill="#D610E6" fill-opacity=".9"/><text x="54" y="32" class="small">8</text>
+      <rect x="116" width="24" height="24" rx="5" fill="#D610E6" fill-opacity=".8"/><text x="116" y="40" class="small">12</text>
+      <rect x="188" width="32" height="32" rx="6" fill="#D610E6" fill-opacity=".7"/><text x="188" y="48" class="small">16</text>
+      <rect x="272" width="48" height="48" rx="8" fill="#D610E6" fill-opacity=".6"/><text x="272" y="64" class="small">24</text>
+      <rect x="372" width="64" height="64" rx="9" fill="#D610E6" fill-opacity=".5"/><text x="372" y="80" class="small">32</text>
+    </g>
+    <path d="M972 833H1828" stroke="#FFFFFF" stroke-opacity=".09"/>
+    <text x="972" y="866" fill="#C8C4D1" font-size="14" font-weight="600">Corner radius</text>
+    <rect x="972" y="882" width="96" height="34" rx="9" fill="#FFFFFF" fill-opacity=".07" stroke="#FFFFFF" stroke-opacity=".14"/>
+    <text x="1080" y="904" class="small">9 / controls</text>
+    <rect x="1206" y="882" width="96" height="34" rx="14" fill="#FFFFFF" fill-opacity=".07" stroke="#FFFFFF" stroke-opacity=".14"/>
+    <text x="1314" y="904" class="small">14 / inputs</text>
+    <rect x="1440" y="882" width="96" height="34" rx="22" fill="#FFFFFF" fill-opacity=".07" stroke="#FFFFFF" stroke-opacity=".14"/>
+    <text x="1548" y="904" class="small">22 / cards</text>
+    <rect x="1668" y="882" width="96" height="34" rx="17" fill="#FFFFFF" fill-opacity=".07" stroke="#FFFFFF" stroke-opacity=".14"/>
+    <text x="1776" y="904" class="small">Pill</text>
+  </g>
+
+  <g id="components">
+    <text x="64" y="990" class="label">04  /  CORE COMPONENTS</text>
+    <text x="64" y="1018" fill="#F8F7FB" font-size="20" font-weight="650">Quiet surfaces. Clear actions. Useful feedback.</text>
+
+    <g id="buttons-and-inputs">
+      <rect x="64" y="1040" width="564" height="334" rx="24" class="card"/>
+      <text x="92" y="1082" fill="#F8F7FB" font-size="16" font-weight="650">Actions + inputs</text>
+      <text x="92" y="1110" class="small">Primary action</text>
+      <rect x="92" y="1122" width="175" height="48" rx="13" fill="url(#brand)"/>
+      <text x="179" y="1152" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="650">Add transaction</text>
+      <text x="290" y="1110" class="small">Secondary action</text>
+      <rect x="290" y="1122" width="160" height="48" rx="13" fill="#FFFFFF" fill-opacity=".06" stroke="#FFFFFF" stroke-opacity=".1"/>
+      <text x="370" y="1152" text-anchor="middle" fill="#E7E5ED" font-size="14" font-weight="600">View reports</text>
+      <text x="92" y="1210" class="small">Search field</text>
+      <rect x="92" y="1222" width="476" height="48" rx="13" fill="#121019" stroke="#FFFFFF" stroke-opacity=".1"/>
+      <circle cx="114" cy="1245" r="7" stroke="#898694" stroke-width="1.7"/>
+      <path d="m119 1250 5 5" stroke="#898694" stroke-width="1.7" stroke-linecap="round"/>
+      <text x="139" y="1250" fill="#898694" font-size="14">Search transactions...</text>
+      <text x="92" y="1310" class="small">Focus / selection</text>
+      <rect x="92" y="1322" width="476" height="32" rx="10" fill="#17121E" stroke="#D610E6" stroke-opacity=".8"/>
+      <rect x="89" y="1319" width="482" height="38" rx="12" stroke="#D610E6" stroke-opacity=".22" stroke-width="2"/>
+    </g>
+
+    <g id="metric-card">
+      <rect x="652" y="1040" width="570" height="334" rx="24" class="card"/>
+      <text x="680" y="1082" fill="#F8F7FB" font-size="16" font-weight="650">Metric card</text>
+      <rect x="680" y="1102" width="514" height="226" rx="20" fill="#111017" stroke="#FFFFFF" stroke-opacity=".09"/>
+      <rect x="704" y="1126" width="38" height="38" rx="12" fill="#FFFFFF" fill-opacity=".07"/>
+      <path d="M723 1135v20m-7-10h14" stroke="#D610E6" stroke-width="2" stroke-linecap="round"/>
+      <text x="756" y="1143" fill="#D5D2DE" font-size="14" font-weight="600">Monthly savings</text>
+      <text x="704" y="1210" fill="#F8F7FB" font-size="42" font-weight="700" letter-spacing="-1.5">$5,240</text>
+      <text x="1168" y="1202" text-anchor="end" fill="#00D895" font-size="13" font-weight="700">+8.4%  <tspan fill="#898694" font-weight="500">vs last month</tspan></text>
+      <rect x="704" y="1250" width="466" height="12" rx="6" fill="#FFFFFF" fill-opacity=".07"/>
+      <rect x="704" y="1250" width="276" height="12" rx="6" fill="url(#blue)"/>
+      <text x="704" y="1301" class="small">Progress / confidence through calm emphasis</text>
+    </g>
+
+    <g id="transaction-card">
+      <rect x="1246" y="1040" width="610" height="334" rx="24" class="card"/>
+      <text x="1274" y="1082" fill="#F8F7FB" font-size="16" font-weight="650">Activity row + financial status</text>
+      <rect x="1274" y="1102" width="554" height="226" rx="20" fill="#111017" stroke="#FFFFFF" stroke-opacity=".09"/>
+      <circle cx="1312" cy="1152" r="22" fill="#16875E"/>
+      <path d="M1303 1146h18l-2 17h-14l-2-17Zm4 0v-4a5 5 0 0 1 10 0v4" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="1348" y="1148" fill="#F8F7FB" font-size="14" font-weight="600">Whole Foods Market</text>
+      <text x="1348" y="1171" class="small">Groceries  ·  Today, 10:42 AM</text>
+      <text x="1798" y="1157" text-anchor="end" fill="#FF5368" font-size="14" font-weight="650">−$86.42</text>
+      <path d="M1298 1190H1804" stroke="#FFFFFF" stroke-opacity=".07"/>
+      <circle cx="1312" cy="1230" r="22" fill="#113D4A"/>
+      <path d="M1302 1232h20m-17-5 17 5-17 5" stroke="#00C8EF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="1348" y="1226" fill="#F8F7FB" font-size="14" font-weight="600">Salary deposit</text>
+      <text x="1348" y="1249" class="small">Income  ·  Today, 9:15 AM</text>
+      <text x="1798" y="1235" text-anchor="end" fill="#00D895" font-size="14" font-weight="650">+$3,240.00</text>
+      <rect x="1274" y="1280" width="110" height="28" rx="14" fill="#00D895" fill-opacity=".1"/>
+      <circle cx="1290" cy="1294" r="4" fill="#00D895"/>
+      <text x="1301" y="1298" fill="#00D895" font-size="12" font-weight="600">Completed</text>
+      <rect x="1396" y="1280" width="96" height="28" rx="14" fill="#D610E6" fill-opacity=".11"/>
+      <text x="1444" y="1298" text-anchor="middle" fill="#E87AF1" font-size="12" font-weight="600">Shopping</text>
+    </g>
+  </g>
+</svg>
