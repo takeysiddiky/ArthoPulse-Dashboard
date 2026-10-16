@@ -989,12 +989,24 @@ button {
   position: absolute;
   top: 160px;
   left: 25px;
+  right: 24px;
   margin: 0;
   font-size: 27px;
   font-weight: 700;
   letter-spacing: -.55px;
   line-height: 35px;
   animation: assistantQuestion .48s cubic-bezier(.22, 1, .36, 1) .35s both;
+}
+
+.assistant-question.has-voice-draft {
+  display: -webkit-box;
+  overflow: hidden;
+  max-height: 96px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow-wrap: anywhere;
+  font-size: 22px;
+  line-height: 30px;
 }
 
 .assistant-question span {
@@ -1066,6 +1078,16 @@ button {
 .mic-button.listening {
   background: radial-gradient(circle at 35% 24%, #ff71f7, #f000d8 65%, #ad00cc);
   animation-duration: 1.1s;
+}
+
+.mic-button.listening::after {
+  position: absolute;
+  inset: -9px;
+  border: 1px solid rgba(255, 255, 255, .58);
+  border-radius: 50%;
+  content: "";
+  animation: voiceRipple 1.2s ease-out infinite;
+  pointer-events: none;
 }
 
 .voice-ripple {
@@ -1883,6 +1905,57 @@ button {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, .065);
+}
+
+.conversation-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voice-language-select,
+.assistant-language-select {
+  display: inline-flex;
+  height: 33px;
+  align-items: center;
+  gap: 5px;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 255, 255, .07);
+  border-radius: 10px;
+  color: #aaa6b4;
+  background: rgba(255, 255, 255, .035);
+}
+
+.assistant-language-select {
+  height: 27px;
+  gap: 3px;
+  margin-left: auto;
+  padding: 0 6px;
+  border-color: rgba(255, 255, 255, .11);
+  background: rgba(23, 6, 58, .24);
+}
+
+.voice-language-select select,
+.assistant-language-select select {
+  max-width: 75px;
+  border: 0;
+  outline: 0;
+  color: #d3d0dc;
+  background: transparent;
+  font: inherit;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.voice-language-select option,
+.assistant-language-select option {
+  color: #f8f7fb;
+  background: #191720;
+}
+
+.voice-language-select > svg:last-child,
+.assistant-language-select > svg:last-child {
+  pointer-events: none;
 }
 
 .conversation-agent {

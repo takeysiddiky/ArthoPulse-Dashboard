@@ -17,6 +17,7 @@ import {
   FileText,
   Filter,
   LayoutDashboard,
+  Languages,
   LogOut,
   MessageCircle,
   Mic,
@@ -517,8 +518,27 @@ function MetricCard({ kind, title, value, change, positive, fill, onOpenDialog }
   )
 }
 
-function AssistantCard() {
+function VoiceLanguageSelect({ value, onChange, className }) {
+  return (
+    <label className={className}>
+      <Languages size={14} />
+      <select aria-label="Voice input language" value={value} onChange={(event) => onChange(event.target.value)}>
+        <option value="en-US">English</option>
+        <option value="bn-BD">বাংলা</option>
+      </select>
+      <ChevronDown size={13} />
+    </label>
+  )
+}
+
+function AssistantCard({ draft, onDraftChange, onToast, voiceLanguage, onVoiceLanguageChange }) {
   const [isOpen, setIsOpen] = useState(true)
+  const appendTranscript = useCallback((transcript) => {
+    onDraftChange(transcript)
+    onToast('Voice message ready. Open AI Assistant to review and send it.')
+  }, [onDraftChange, onToast])
+  const reportVoiceError = useCallback((error) => onToast(error), [onToast])
+  const [listening, toggleListening] = useVoiceInput(appendTranscript, reportVoiceError, voiceLanguage)
 
   if (!isOpen) {
     return <section className="card assistant-card assistant-closed"><Sparkles size={21} /><strong>AI Assistant is paused</strong><button type="button" className="assistant-reopen" onClick={() => setIsOpen(true)}>Reopen assistant</button></section>
@@ -529,14 +549,15 @@ function AssistantCard() {
       <div className="assistant-heading">
         <span className="assistant-icon"><Sparkles size={18} /></span>
         <h2 id="assistant-title">AI Assistant</h2>
-        <button type="button" className="icon-button assistant-expand" aria-label="Open AI Assistant" onClick={() => { window.location.hash = 'assistant' }}><ArrowUpRight size={16} /></button>
+        <VoiceLanguageSelect value={voiceLanguage} onChange={onVoiceLanguageChange} className="assistant-language-select" />
+        <button type="button" className="icon-button assistant-expand" aria-label={draft ? 'Review voice message in AI Assistant' : 'Open AI Assistant'} onClick={() => { window.location.hash = 'assistant' }}><ArrowUpRight size={16} /></button>
       </div>
-      <p className="assistant-question">
-        <>How can I save<br />more money <span>thi ...</span></>
+      <p className={`assistant-question ${draft ? 'has-voice-draft' : ''}`} aria-live="polite">
+        {listening ? <>Listening now<span className="typing-dots"><i /><i /><i /></span></> : draft ? draft : <>How can I save<br />more money <span>this month?</span></>}
       </p>
       <div className="assistant-controls">
-        <button type="button" className="icon-button assistant-control keyboard-button" aria-label="Type a message" onClick={() => { window.location.hash = 'assistant' }}><Keyboard size={20} /></button>
-        <button type="button" className="assistant-control mic-button" aria-label="Open assistant for voice input" onClick={() => { window.location.hash = 'assistant' }}><Mic size={25} /></button>
+        <button type="button" className="icon-button assistant-control keyboard-button" aria-label={draft ? 'Review voice message' : 'Type a message'} onClick={() => { window.location.hash = 'assistant' }}><Keyboard size={20} /></button>
+        <button type="button" className={`assistant-control mic-button ${listening ? 'listening' : ''}`} aria-label={listening ? 'Stop voice input' : 'Start voice input'} aria-pressed={listening} onClick={toggleListening}><Mic size={25} /></button>
         <button type="button" className="icon-button assistant-control close-button" aria-label="Close assistant" onClick={() => setIsOpen(false)}><X size={21} /></button>
       </div>
     </section>
@@ -819,25 +840,46 @@ const assistantSuggestions = [
   { icon: CircleHelp, label: 'Can I afford a vacation?' },
 ]
 
-function AssistantPage({ onOpenDialog, onToast }) {
-  const [message, setMessage] = useState('')
+function AssistantPage({ onOpenDialog, onToast, draft, onDraftChange, voiceLanguage, onVoiceLanguageChange }) {
+  const message = draft
   const [conversation, setConversation] = useState([])
   const messageInput = useRef(null)
+  const conversationBody = useRef(null)
   const appendTranscript = useCallback((transcript) => {
-    setMessage((current) => current ? `${current} ${transcript}` : transcript)
-  }, [])
+    onDraftChange((current) => current ? `${current} ${transcript}` : transcript)
+  }, [onDraftChange])
   const reportVoiceError = useCallback((error) => onToast(error), [onToast])
-  const [listening, toggleListening] = useVoiceInput(appendTranscript, reportVoiceError)
+  const [listening, toggleListening] = useVoiceInput(appendTranscript, reportVoiceError, voiceLanguage)
 
   useEffect(() => {
     messageInput.current?.focus({ preventScroll: true })
   }, [])
 
+  useEffect(() => {
+    const body = conversationBody.current
+    if (body) body.scrollTop = body.scrollHeight
+  }, [conversation])
+
   const sendMessage = (value = message) => {
     const question = value.trim()
     if (!question) return
-    setConversation((items) => [...items, { question, answer: 'Based on your April activity, you have saved $5,240 so far — 8.4% more than last month. Your biggest opportunity is dining and shopping, where a small weekly adjustment could add to your savings without changing your routine.' }])
-    setMessage('')
+    const normalizedQuestion = question.toLowerCase()
+    const isBengali = voiceLanguage === 'bn-BD'
+    const asksAboutVacation = normalizedQuestion.includes('vacation') || normalizedQuestion.includes('afford') || /ছুটি|ভ্রমণ|ঘুরতে/.test(normalizedQuestion)
+    const asksAboutSpending = normalizedQuestion.includes('spend') || normalizedQuestion.includes('summar') || /খরচ|ব্যয়|ব্যয়/.test(normalizedQuestion)
+    const answer = asksAboutVacation
+      ? isBengali
+        ? 'আপনার বর্তমান ব্যালেন্স $12,480.50 এবং এই মাসে $5,240 সঞ্চয় হয়েছে। নির্দিষ্ট বাজেট করে নিয়মিত বিল ও জরুরি সঞ্চয়ের টাকা আলাদা রাখলে ভ্রমণ সম্ভব হতে পারে। এটি একটি ডেমো হিসাব—বুকিংয়ের আগে আপনার প্রকৃত অ্যাকাউন্ট যাচাই করুন।'
+        : 'Your current snapshot shows $12,480.50 available and $5,240 saved this month. A trip could fit if you set a clear budget and keep enough aside for regular bills and your emergency fund. This is a demo estimate, so check your actual account before booking.'
+      : asksAboutSpending
+        ? isBengali
+          ? 'এপ্রিলের হিসাবে আপনার খরচ $3,790, যা গত মাসের চেয়ে 12.6% কম। সবচেয়ে বেশি খরচ হয়েছে Shopping-এ $1,240 এবং Food & dining-এ $980। এই দুই খাত পর্যালোচনা করলে সঞ্চয়ের সুযোগ পেতে পারেন।'
+          : 'Your April snapshot shows $3,790 in expenses, down 12.6% from last month. Shopping is your largest category at $1,240, followed by food and dining at $980. Reviewing those two areas may reveal the easiest savings.'
+        : isBengali
+          ? 'এই মাসে এখন পর্যন্ত আপনার সঞ্চয় $5,240—গত মাসের চেয়ে 8.4% বেশি। Shopping ও Food & dining-এ সঞ্চয়ের সুযোগ বেশি। এই খাতগুলোর জন্য সাপ্তাহিক সীমা ঠিক করে অবশিষ্ট টাকা সঞ্চয়ে রাখতে পারেন।'
+          : 'You have saved $5,240 so far this month, 8.4% more than last month. Shopping and dining are your biggest opportunities to save. Try setting a weekly limit for one of those categories and move any leftover amount into savings.'
+    setConversation((items) => [...items, { question, answer }])
+    onDraftChange('')
   }
 
   return (
@@ -852,9 +894,12 @@ function AssistantPage({ onOpenDialog, onToast }) {
         <section className="card conversation-card" aria-label="Conversation with your AI financial assistant">
           <div className="conversation-topbar">
             <div className="conversation-agent"><span className="assistant-icon"><Sparkles size={18} /></span><div><strong>ArthoPulse Assistant</strong><small><i /> Your financial co-pilot</small></div></div>
-            <button type="button" className="control-button new-chat-button" onClick={() => { setConversation([]); setMessage(''); messageInput.current?.focus({ preventScroll: true }) }}><Plus size={15} />New conversation</button>
+            <div className="conversation-actions">
+              <VoiceLanguageSelect value={voiceLanguage} onChange={onVoiceLanguageChange} className="voice-language-select" />
+              <button type="button" className="control-button new-chat-button" onClick={() => { setConversation([]); onDraftChange(''); messageInput.current?.focus({ preventScroll: true }) }}><Plus size={15} />New conversation</button>
+            </div>
           </div>
-          <div className="conversation-body">
+          <div className="conversation-body" ref={conversationBody}>
             <div className="assistant-welcome">
               <span className="welcome-orb"><Sparkles size={24} /></span>
               <h2>Let’s make your money work <span>smarter.</span></h2>
@@ -876,7 +921,7 @@ function AssistantPage({ onOpenDialog, onToast }) {
             )}
           </div>
           <form className="assistant-composer" onSubmit={(event) => { event.preventDefault(); sendMessage() }}>
-            <input ref={messageInput} aria-label="Ask ArthoPulse Assistant" placeholder="Ask about your spending, savings, or goals..." value={message} onChange={(event) => setMessage(event.target.value)} />
+            <input ref={messageInput} aria-label="Ask ArthoPulse Assistant" placeholder="Ask about your spending, savings, or goals..." value={message} onChange={(event) => onDraftChange(event.target.value)} />
             <button type="button" className={`composer-mic ${listening ? 'listening' : ''}`} aria-label={listening ? 'Stop voice input' : 'Start voice input'} aria-pressed={listening} onClick={toggleListening}><Mic size={18} /></button>
             <button type="submit" className="send-message" aria-label="Send message" disabled={!message.trim()}><ArrowUpRight size={18} /></button>
           </form>
@@ -898,50 +943,111 @@ function AssistantPage({ onOpenDialog, onToast }) {
   )
 }
 
-function useVoiceInput(onTranscript, onError) {
+function useVoiceInput(onTranscript, onError, language) {
   const [listening, setListening] = useState(false)
   const recognitionRef = useRef(null)
+  const listeningRef = useRef(false)
+  const requestIdRef = useRef(0)
 
-  useEffect(() => () => recognitionRef.current?.abort(), [])
+  useEffect(() => () => {
+    requestIdRef.current += 1
+    const recognition = recognitionRef.current
+    if (recognition) {
+      recognition.onend = null
+      recognition.abort()
+      recognitionRef.current = null
+    }
+    listeningRef.current = false
+  }, [])
 
-  const toggleListening = useCallback(() => {
-    if (listening) {
-      recognitionRef.current?.stop()
+  const toggleListening = useCallback(async () => {
+    if (recognitionRef.current) {
+      requestIdRef.current += 1
+      listeningRef.current = false
+      recognitionRef.current.stop()
+      return
+    }
+
+    if (listeningRef.current) {
+      requestIdRef.current += 1
+      listeningRef.current = false
       setListening(false)
       return
     }
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
     if (!SpeechRecognition) {
-      onError('Voice input is not supported in this browser.')
+      onError('Voice input is not supported in this browser. Use a recent version of Chrome or Edge, or type your message.')
       return
     }
 
+    const requestId = requestIdRef.current + 1
+    requestIdRef.current = requestId
+    listeningRef.current = true
+    setListening(true)
+
+    let processLocally = false
+    if (typeof SpeechRecognition.available === 'function') {
+      try {
+        let availability = await SpeechRecognition.available({ langs: [language], processLocally: true })
+        if (availability === 'downloadable' && typeof SpeechRecognition.install === 'function') {
+          onError(`Preparing the ${language === 'bn-BD' ? 'Bengali' : 'English'} on-device speech model…`)
+          const installed = await SpeechRecognition.install({ langs: [language] })
+          availability = installed
+            ? await SpeechRecognition.available({ langs: [language], processLocally: true })
+            : 'unavailable'
+        }
+        processLocally = availability === 'available'
+      } catch (error) {
+        console.warn('On-device speech recognition is unavailable; using the browser speech service', error)
+      }
+    }
+
+    if (!listeningRef.current || requestIdRef.current !== requestId) return
+
     const recognition = new SpeechRecognition()
-    recognition.lang = navigator.language || 'en-US'
+    recognition.lang = language
     recognition.interimResults = false
     recognition.maxAlternatives = 1
+    if (processLocally) recognition.processLocally = true
     recognition.onresult = (event) => {
-      const transcript = event.results?.[0]?.[0]?.transcript
+      const transcript = Array.from(event.results || [])
+        .slice(event.resultIndex || 0)
+        .filter((result) => result.isFinal)
+        .map((result) => result[0]?.transcript || '')
+        .join(' ')
+        .trim()
       if (transcript) onTranscript(transcript)
     }
     recognition.onerror = (event) => {
+      listeningRef.current = false
       setListening(false)
-      if (event.error !== 'aborted') {
-        onError(event.error === 'not-allowed' ? 'Allow microphone access to use voice input.' : `Voice input failed: ${event.error}`)
+      if (recognitionRef.current === recognition) recognitionRef.current = null
+      const messages = {
+        'audio-capture': 'No microphone was found. Check that your microphone is connected and enabled.',
+        network: 'Your browser could not reach its speech-recognition service. Check your internet connection, then try again or type your message.',
+        'no-speech': 'No speech was detected. Check your microphone and try speaking again.',
+        'not-allowed': 'Microphone access is blocked. Allow microphone access for this site in your browser settings.',
+        'service-not-allowed': 'Speech recognition is blocked by your browser. Check its microphone and speech-service permissions.',
       }
+      if (event.error !== 'aborted') onError(messages[event.error] || `Voice input failed (${event.error}). You can try again or type your message.`)
     }
-    recognition.onend = () => setListening(false)
+    recognition.onend = () => {
+      listeningRef.current = false
+      setListening(false)
+      if (recognitionRef.current === recognition) recognitionRef.current = null
+    }
     recognitionRef.current = recognition
 
     try {
       recognition.start()
-      setListening(true)
     } catch (error) {
+      listeningRef.current = false
       setListening(false)
-      onError(`Unable to start voice input: ${error.message}`)
+      recognitionRef.current = null
+      onError(`Unable to start voice input (${error.message}). Check microphone access, then try again.`)
     }
-  }, [listening, onError, onTranscript])
+  }, [language, onError, onTranscript])
 
   return [listening, toggleListening]
 }
@@ -953,6 +1059,8 @@ function App() {
   const [toast, setToast] = useState('')
   const [settings, setSettings] = useState(loadSettings)
   const [transactions, setTransactions] = useState(loadTransactions)
+  const [assistantDraft, setAssistantDraft] = useState('')
+  const [voiceLanguage, setVoiceLanguage] = useState(() => navigator.language?.toLowerCase().startsWith('bn') ? 'bn-BD' : 'en-US')
   const privacyMode = settings.privacyMode
   const openDialog = useCallback((title, body) => setDialog(title ? { title, body } : null), [])
   const showToast = useCallback((message) => setToast(message), [])
@@ -1007,7 +1115,7 @@ function App() {
       <div className="scaled-stage" style={{ width: 1460 * scale, height: 962 * scale }}>
         <div className={`dashboard ${privacyMode ? 'privacy-mode' : ''}`} style={{ transform: `scale(${scale})` }}>
           <Header currentPage={currentPage} settings={settings} onOpenDialog={openDialog} onToast={showToast} onSaveSettings={saveSettings} />
-          {currentPage === 'reports' ? <ReportsPage onOpenDialog={openDialog} onToast={showToast} /> : currentPage === 'transactions' ? <TransactionsPage transactions={transactions} onOpenDialog={openDialog} onToast={showToast} /> : currentPage === 'assistant' ? <AssistantPage onOpenDialog={openDialog} onToast={showToast} /> : (
+          {currentPage === 'reports' ? <ReportsPage onOpenDialog={openDialog} onToast={showToast} /> : currentPage === 'transactions' ? <TransactionsPage transactions={transactions} onOpenDialog={openDialog} onToast={showToast} /> : currentPage === 'assistant' ? <AssistantPage onOpenDialog={openDialog} onToast={showToast} draft={assistantDraft} onDraftChange={setAssistantDraft} voiceLanguage={voiceLanguage} onVoiceLanguageChange={setVoiceLanguage} /> : (
             <div className="dashboard-grid" id="dashboard">
               <div className="left-column">
                 <IncomeChart onToast={showToast} />
@@ -1019,7 +1127,7 @@ function App() {
               <aside className="right-column" aria-label="Financial overview">
                 <MetricCard kind="savings" title="Monthly Savings" value="$5,240" change="+8.4%" positive fill={60} onOpenDialog={openDialog} />
                 <MetricCard kind="expenses" title="Monthly Expenses" value="$3,790" change="-12.6%" fill={40} onOpenDialog={openDialog} />
-                <AssistantCard />
+                <AssistantCard draft={assistantDraft} onDraftChange={setAssistantDraft} onToast={showToast} voiceLanguage={voiceLanguage} onVoiceLanguageChange={setVoiceLanguage} />
               </aside>
             </div>
           )}
